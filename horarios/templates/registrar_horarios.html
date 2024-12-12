@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		{% load static %}
+
+		<meta charset="UTF-8"/>
+		<title>Registrar Horario</title>
+
+		<link rel="icon" href="{% static "/imagenes/logo.PNG"%}"/>
+
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"/>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
+
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2/dist/sweetalert2.all.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2/dist/sweetalert2.min.css">
+
+		<!-- JavaScript --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
+		<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+		<!-- CSS -->
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+		<!-- Default theme -->
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+		<!-- Semantic UI theme -->
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+		<!-- Bootstrap theme -->
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+		<script>
+            const botonCerrarSesion = () => {
+                Swal.fire({
+					title: '¿Esta Seguro?',
+					text: "Debera iniciar sesion nuevamente!",
+					icon: 'question',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Aceptar',
+					cancelButtonText: 'Cancelar'
+				  }).then((result) => {
+					if (result.isConfirmed) {
+						window.location.href = "/logout";
+					}
+				  })
+            }
+			const botonEliminar = (id) => {
+                Swal.fire({
+					title: '¿Esta Seguro?',
+					text: "Desea Eliminar los datos del Profesor?",
+					icon: 'question',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Aceptar',
+					cancelButtonText: 'Cancelar'
+				  }).then((result) => {
+					if (result.isConfirmed) {
+						window.location.href = "/eliminar_hor/"+id;
+					}
+				  })
+            }
+
+        </script>
+
+	</head>
+<body class="bg-white">
+
+	<div>
+		<nav class="navbar navbar-expand-lg bg-danger" style="width:100%%" />
+		  	<div class="container-fluid">
+
+				<a href="/menu_secretaria">
+					<img src="{% static "/imagenes/imagen1.PNG"%}" width="250px" style="margin-right:10px;" alt="No Encontrada"/>
+				</a>
+
+				<span class="navbar-brand text-white" style="margin-right:50px">Menu {{ nomUsuario }}</span>
+
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+					<div class="navbar-nav">
+						<a class="nav-link text-center text-white" href="/menu_secretaria">Inicio</a>
+						<a class="nav-link text-center text-white" href="/registrar_profesor" style="border-left: 1px solid rgb(255, 255, 255);">Registrar Profesores</a>
+                        <a class="nav-link text-center text-white" href="/registrar_asignaturas" style="border-left: 1px solid rgb(255, 255, 255);">Registrar Asignaturas</a>
+                        <a class="nav-link text-center text-white" href="/registrar_horarios" style="border-left: 1px solid rgb(255, 255, 255);">Crear Horarios Cursos</a>
+						<a class="nav-link text-center text-white" href="/visualizar_horarios" style="border-left: 1px solid rgb(255, 255, 255);">Horarios Cursos</a>
+						<a class="nav-link text-center text-white" href="/visualizar_horarios_profesores" style="border-left: 1px solid rgb(255, 255, 255);">Horarios Profesores</a>
+						<a class="nav-link text-center text-white" href="/visuzalizar_disponibilidad" style="border-left: 1px solid rgb(255, 255, 255);">Listar Disponibilidad</a>
+						<a class="nav-link text-center text-white" href="#" onClick="botonCerrarSesion()" style="border-left: 1px solid rgb(255, 255, 255);">Cerrar Sesión</a>
+					</div>
+				</div>
+		  	</div>
+		</nav>
+
+	</div>
+	<br>
+	{%if asg%}
+		{%if pro%}
+			{%if dis%}
+				<div style="width:40%; margin:auto">
+					<table class="table table-hover bg-white" style="width:60%; margin:auto;">
+						<thead>
+							<tr class="text-center">
+								<th>CURSO</th>
+								<th>HORARIO</th>
+							</tr>
+						</thead>
+						<tbody class="text-center">
+
+								{%for x in cur%}
+
+									<tr class="align-middle">
+										<td>{{x.nombre}}</td>
+										<td>
+											<a href="/mostrar_horario/0/{{x.id}}" class="btn btn-lg">
+												<i class="bi bi-calendar2-event"></i>
+											</a>
+										</td>
+									</tr>
+
+								{%endfor%}
+
+						</tbody>
+					</table>
+				</div>
+				<br>
+			{%else%}
+				<script>
+					Swal.fire({
+						title: 'Disponibilidad no Registrados',
+						text: "Debe Registrar la Disponibilidad de al menos un Profesor para Continuar!!",
+						icon: 'error',
+						confirmButtonColor: '#3085d6',
+						cancelButtonColor: '#d33',
+						confirmButtonText: 'Aceptar'
+					}).then((result) => {
+						if (result.isConfirmed) {
+							window.location.href = "/registrar_disponibilidad";
+						}
+					})
+				</script>
+			{%endif%}
+		{%else%}
+			<script>
+				Swal.fire({
+					title: 'Profesores no Registrados',
+					text: "Debe Registrar al menos un Profesor para Continuar!!",
+					icon: 'error',
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Aceptar'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						window.location.href = "/registrar_profesor";
+					}
+				})
+			</script>
+		{%endif%}
+	{%else%}
+		<script>
+			Swal.fire({
+				title: 'Asignaturas no Registrados',
+				text: "Debe Registrar al menos una Asignatura para Continuar!!",
+				icon: 'error',
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Aceptar'
+			  }).then((result) => {
+				if (result.isConfirmed) {
+					window.location.href = "/registrar_asignaturas";
+				}
+			  })
+		</script>
+	{%endif%}
+	{%if r%}
+		<script> alertify.success('{{r}}');</script>
+	{%endif%}
+
+	{%if r2%}
+		<script> alertify.error('{{r2}}');</script>
+	{%endif%}
+
+</body>
+</html>

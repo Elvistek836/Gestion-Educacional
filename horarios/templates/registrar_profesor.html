@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		{% load static %}
+
+		<meta charset="UTF-8"/>
+		<title>Registrar Profesor</title>
+
+		<link rel="icon" href="{% static "/imagenes/logo.PNG"%}"/>
+
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"/>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
+
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2/dist/sweetalert2.all.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2/dist/sweetalert2.min.css">
+
+		<!-- JavaScript --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
+		<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+		<!-- CSS -->
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+		<!-- Default theme -->
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+		<!-- Semantic UI theme -->
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+		<!-- Bootstrap theme -->
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+		<script>
+            const botonCerrarSesion = () => {
+                Swal.fire({
+					title: '¿Esta Seguro?',
+					text: "Debera iniciar sesion nuevamente!",
+					icon: 'question',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Aceptar',
+					cancelButtonText: 'Cancelar'
+				  }).then((result) => {
+					if (result.isConfirmed) {
+						window.location.href = "/logout";
+					}
+				  })
+            }
+			const botonEliminar = (id) => {
+                Swal.fire({
+					title: '¿Esta Seguro?',
+					text: "Desea Eliminar los datos del Profesor?",
+					icon: 'question',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Aceptar',
+					cancelButtonText: 'Cancelar'
+				  }).then((result) => {
+					if (result.isConfirmed) {
+						/*window.location.href = "/eliminar_pro/"+id;*/
+					}
+				  })
+            }
+
+        </script>
+
+	</head>
+<body class="bg-white">
+
+	<div>
+		<nav class="navbar navbar-expand-lg bg-danger" style="width:100%%" />
+		  	<div class="container-fluid">
+
+				<a href="/menu_secretaria">
+					<img src="{% static "/imagenes/imagen1.PNG"%}" width="250px" style="margin-right:10px;" alt="No Encontrada"/>
+				</a>
+
+				<span class="navbar-brand text-white" style="margin-right:50px">Menu {{ nomUsuario }}</span>
+
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+					<div class="navbar-nav">
+						<a class="nav-link text-center text-white" href="/menu_secretaria">Inicio</a>
+						<a class="nav-link text-center text-white" href="/registrar_profesor" style="border-left: 1px solid rgb(255, 255, 255);">Registrar Profesores</a>
+                        <a class="nav-link text-center text-white" href="/registrar_asignaturas" style="border-left: 1px solid rgb(255, 255, 255);">Registrar Asignaturas</a>
+                        <a class="nav-link text-center text-white" href="/registrar_horarios" style="border-left: 1px solid rgb(255, 255, 255);">Crear Horarios Cursos</a>
+						<a class="nav-link text-center text-white" href="/visualizar_horarios" style="border-left: 1px solid rgb(255, 255, 255);">Horarios Cursos</a>
+						<a class="nav-link text-center text-white" href="/visualizar_horarios_profesores" style="border-left: 1px solid rgb(255, 255, 255);">Horarios Profesores</a>
+						<a class="nav-link text-center text-white" href="/visuzalizar_disponibilidad" style="border-left: 1px solid rgb(255, 255, 255);">Listar Disponibilidad</a>
+						<a class="nav-link text-center text-white" href="#" onClick="botonCerrarSesion()" style="border-left: 1px solid rgb(255, 255, 255);">Cerrar Sesión</a>
+					</div>
+				</div>
+		  	</div>
+		</nav>
+
+	</div>
+	<br>
+	<br>
+    <div style="width:50%; margin:auto">
+        <form action="/registrar_pro" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<center>
+				<h1>Registro de Profesores</h1>
+				<br>
+				<input class="form-control form-control-lg text-center" style="margin-bottom:10px; width:40%;"  type="text"  placeholder="Digite El Rut del Profesor (Ej: 11.111.111-1)"  name="txtrut"  required/>
+				<input class="form-control form-control-lg text-center" style="margin-bottom:10px; width:40%;"  type="text"  placeholder="Digite El Nombre del Profesor"  name="txtnom"  required/>
+				<input class="form-control form-control-lg text-center" style="margin-bottom:10px; width:40%;"  type="text"  placeholder="Digite El Apellido del Profesor"  name="txtape"  required/>
+				<select name="opniv" class="form-select-lg text-center" style="margin-bottom:10px; width:40%;" required/>
+				 	<option value="">Seleccione Enseñanza</option>
+					<option value="BASICA">Enseñanza Basica</option>
+					<option value="MEDIA">Enseñanza Media</option>
+					<option value="BASICA y MEDIA">Ambos niveles de Enseñanza</option>
+				</select>
+				<br>
+				<input type="submit" class="btn btn-primary btn-lg" style="width:30%;" value="Registrar Profesor"/>
+			</center>
+		</form>
+    </div>
+	<br>
+	<br>
+	{%if pro%}
+		<table class="table table-hover bg-white" style="width:60%; margin:auto;">
+			<thead>
+				<tr class="text-center">
+					<th>RUT</th>
+					<th>NOMBRE</th>
+					<th>APELLIDO</th>
+					<th>ENSEÑANZA</th>
+					<th>MODIFICAR</th>
+					<th>ELIMINAR</th>
+					<th>ESPECIALIDADES</th>
+					<th>DISPONIBILIDAD</th>
+				</tr>
+			</thead>
+			<tbody class="text-center">
+
+					{%for x in pro%}
+
+						<tr class="align-middle">
+							<td>{{x.rut}}</td>
+							<td>{{x.nombre}}</td>
+							<td>{{x.apellido}}</td>
+							<td>{{x.nivel}}</td>
+							<td>
+								<a href="/modificar_profesor/{{x.id}}" class="btn btn-lg">
+									<i class="bi bi-pencil-fill"></i>
+								</a>
+							</td>
+							<td>
+								<button type="button" onClick="botonEliminar({{x.id}})" class="btn btn-lg">
+									<i class="bi bi-trash-fill"></i>
+								</button>
+							</td>
+							<td>
+								<a href="/registrar_especialidad/{{x.id}}" class="btn btn-lg">
+									<i class="bi bi-plus-square"></i>
+								</a>
+							</td>
+							<td>
+								<a href="/registrar_disponibilidad/{{x.id}}" class="btn btn-lg">
+									<i class="bi bi-book"></i>
+								</a>
+							</td>
+						</tr>
+
+					{%endfor%}
+
+			</tbody>
+		</table>
+
+	{%else%}
+		<h4 style="margin-left: 840px; margin-top: 40px">No Existen Registros</h4>
+	{%endif%}
+	{%if r%}
+		<script> alertify.success('{{r}}');</script>
+	{%endif%}
+
+	{%if r2%}
+		<script> alertify.error('{{r2}}');</script>
+	{%endif%}
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+</body>
+</html>
