@@ -12,7 +12,7 @@ Funciones:
   - Especialidades de Profesores
   - entre otras funciones
 
-Funciones de Horarios y Disponibilidad se recomienda utilizar vista principal. Las demas funciones se utilizan colocando "/admin".
+Funciones de Horarios y Disponibilidad se recomienda utilizar vista principal. Las demas funciones se utilizan colocando "/admin" en la URL.
 
 Usuarios vista principal: Directora / 123456      Secretaria / 654321
 
